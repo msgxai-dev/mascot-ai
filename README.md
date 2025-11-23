@@ -1,8 +1,8 @@
-# Mascot AI Avatar Integration
+# Mascot AI Avatar Integration APP (MVP)
 
-MVP application for integrating animated avatars with ElevenLabs conversational AI using Mascotbot SDK. Real-time lip sync, WebSocket support, and production-ready React components.
+MVP application for integrating animated avatars with ElevenLabs conversational AI using Mascotbot SDK.
 
-![ElevenLabs Avatar Integration Demo](https://mascotbot-app.s3.amazonaws.com/rive-assets/og_assets/preview.png)
+![ElevenLabs Avatar Integration Demo](https://matulungin-na-panda.vercel.app/illustration.png)
 
 **After deploying with Vercel:**
 1. Add the Mascotbot SDK package (`mascotbot-sdk-react-0.1.6.tgz`) to your cloned repository
@@ -25,12 +25,12 @@ git clone REPOSITORY_URL
 cd REPO_DIR
 ```
 
-2. Copy the Mascotbot SDK package to the project root:
+2. Download the Mascotbot SDK package to the project root (Mascotbot AI dashboard after paying 49$):
 ```bash
 cp /path/to/mascotbot-sdk-react-0.1.6.tgz ./
 ```
 
-3. Copy your mascot .riv file to the public folder:
+3. Download your mascot .riv file to the public folder (Mascotbot AI dashboard after paying 49$):
 ```bash
 cp /path/to/mascot.riv ./public/
 ```
@@ -128,7 +128,7 @@ The demo pre-fetches signed URLs and refreshes them every 9 minutes, ensuring in
 
 ### Using Your Own Avatar
 
-The demo expects a mascot .riv file in the public folder. The file path is configured in `src/app/page.tsx`:
+The demo expects a mascot .riv files in the public folder. The file path is configured in `src/app/page.tsx`:
 
 ```typescript
 const mascotUrl = "/mascot.riv"; // Place your .riv file in the public folder
