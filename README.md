@@ -2,7 +2,7 @@
 
 MVP application for integrating animated avatars with ElevenLabs conversational AI using Mascotbot SDK.
 
-![ElevenLabs Avatar Integration Demo](./public/illustration.png)
+![Avatar Integration Demo](./public/illustration.png)
 
 **After deploying with Vercel:**
 1. Add the Mascotbot SDK package (`mascotbot-sdk-react-0.1.6.tgz`) to your cloned repository
