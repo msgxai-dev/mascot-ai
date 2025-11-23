@@ -1,12 +1,8 @@
-# ElevenLabs Avatar Integration Demo
+# Mascot AI Avatar Integration
 
-Complete open-source example for integrating animated avatars with ElevenLabs conversational AI using Mascotbot SDK. Real-time lip sync, WebSocket support, and production-ready React components.
+MVP application for integrating animated avatars with ElevenLabs conversational AI using Mascotbot SDK. Real-time lip sync, WebSocket support, and production-ready React components.
 
 ![ElevenLabs Avatar Integration Demo](https://mascotbot-app.s3.amazonaws.com/rive-assets/og_assets/preview.png)
-
-## 🚀 Quick Start
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmascotbot%2Felevenlabs-avatar&env=MASCOT_BOT_API_KEY,ELEVENLABS_API_KEY,ELEVENLABS_AGENT_ID&envDescription=API%20keys%20required%20for%20ElevenLabs%20avatar%20integration&envLink=https%3A%2F%2Fdocs.mascot.bot%2Flibraries%2Felevenlabs-avatar&project-name=elevenlabs-avatar-demo&repository-name=elevenlabs-avatar-demo)
 
 **After deploying with Vercel:**
 1. Add the Mascotbot SDK package (`mascotbot-sdk-react-0.1.6.tgz`) to your cloned repository
@@ -25,8 +21,8 @@ Complete open-source example for integrating animated avatars with ElevenLabs co
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/mascotbot/elevenlabs-avatar.git
-cd elevenlabs-avatar
+git clone REPOSITORY_URL
+cd REPO_DIR
 ```
 
 2. Copy the Mascotbot SDK package to the project root:
@@ -244,4 +240,4 @@ This demo is provided as an open-source example for Mascotbot subscribers. You'r
 
 ---
 
-Built with ❤️ by the Mascotbot team
+Built with ❤️ by the HelloMSG

@@ -22,6 +22,12 @@ function ElevenLabsAvatar({ dynamicVariables }: ElevenLabsAvatarProps) {
   const urlRefreshInterval = useRef<NodeJS.Timeout | null>(null);
   const connectionStartTime = useRef<number | null>(null);
   
+  // Loading states
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStatus, setLoadingStatus] = useState("Initializing application...");
+  const [mascotLoaded, setMascotLoaded] = useState(false);
+  
   // Natural lip sync settings
   const [naturalLipSyncEnabled] = useState(true);
   const [lipSyncConfig] = useState({
@@ -105,12 +111,41 @@ function ElevenLabsAvatar({ dynamicVariables }: ElevenLabsAvatarProps) {
     }
   }, [dynamicVariables]);
 
+  // Loading sequence management
+  useEffect(() => {
+    const loadingSequence = async () => {
+      // Step 1: Initializing (0-30%)
+      setLoadingProgress(0);
+      setLoadingStatus("Initializing application...");
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setLoadingProgress(30);
+
+      // Step 2: Loading MascotRive (30-60%)
+      setLoadingStatus("Loading mascot...");
+      await new Promise(resolve => setTimeout(resolve, 800));
+      setLoadingProgress(60);
+
+      // Step 3: Fetching signed URL (60-80%)
+      setLoadingStatus("Preparing voice connection...");
+      await fetchAndCacheUrl();
+      setLoadingProgress(80);
+
+      // Step 4: Final preparations (80-100%)
+      setLoadingStatus("Almost ready...");
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setLoadingProgress(100);
+
+      // Complete loading
+      await new Promise(resolve => setTimeout(resolve, 300));
+      setIsLoading(false);
+    };
+
+    loadingSequence();
+  }, []);
+
   // Set up URL pre-fetching and refresh
   useEffect(() => {
-    // Fetch URL immediately on page load
-    fetchAndCacheUrl();
-
-    // Set up refresh interval (every 9 minutes)
+    // Set up refresh interval (every 9 minutes) - initial fetch handled in loading sequence
     urlRefreshInterval.current = setInterval(
       () => {
         console.log("Refreshing cached URL...");
@@ -173,23 +208,47 @@ function ElevenLabsAvatar({ dynamicVariables }: ElevenLabsAvatarProps) {
     console.log(`Microphone ${newMuteState ? "muted" : "unmuted"}`);
   }, [isMuted]);
 
+  // Loader component
+  const LoaderComponent = () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: "#FFF8F0" }}>
+      <div className="text-center">
+        <div className="mb-8">
+          <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-orange-400 to-orange-500 transition-all duration-300 ease-out"
+              style={{ width: `${loadingProgress}%` }}
+            />
+          </div>
+        </div>
+        <div className="text-lg font-mono text-gray-700 mb-2">
+          {Math.round(loadingProgress)}%
+        </div>
+        <div className="text-sm text-gray-500 font-mono">
+          {loadingStatus}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="fixed inset-0 overflow-hidden" style={{ backgroundColor: "#FFF8F0" }}>
-      <div className="h-screen w-full flex items-center justify-center">
+    <>
+      {isLoading && <LoaderComponent />}
+      <div className="fixed inset-0 overflow-hidden" style={{ backgroundColor: "#FFF8F0" }}>
+        <div className="h-screen w-full flex items-center justify-center">
         {/* Mascot Display Area */}
         <div className="relative w-full h-full">
           {/* Background pattern SVG - now full width */}
           <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.4 }}>
             <img
-              src="/bg_pattern.svg"
+              src="/pldt-panda-bg.svg"
               alt=""
               className="object-cover object-center w-full h-full"
             />
           </div>
 
-          {/* Mascot wrapper */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-full h-full">
+          {/* Mascot wrapper - Responsive */}
+          <div className="absolute inset-0 flex items-center justify-center translate-y-[5vh]">
+            <div className="w-[65vw] h-[50vh] sm:w-[60vw] sm:h-[55vh] md:w-[55vw] md:h-[60vh] lg:w-[50vw] lg:h-[65vh] xl:w-[45vw] xl:h-[70vh] max-w-xl max-h-[520px]">
               <MascotRive />
             </div>
           </div>
@@ -250,13 +309,14 @@ function ElevenLabsAvatar({ dynamicVariables }: ElevenLabsAvatarProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
 export default function Home() {
   // Add your mascot .riv file to the public folder
   // Available with Mascot Bot SDK subscription
-  const mascotUrl = "/mascot.riv";
+  const mascotUrl = "/bear.riv";
 
   // Hardcoded dynamic variables for testing
   const dynamicVariables = {
